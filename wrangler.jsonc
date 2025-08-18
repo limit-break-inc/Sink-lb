@@ -33,5 +33,6 @@
       "zone_name": "limitinternal.com"
     }
   ],
-  "workers_dev": false
+  "workers_dev": false,
+  "preview_urls": false
 }
