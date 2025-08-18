@@ -98,6 +98,52 @@ We welcome your contributions and PRs.
 
 We currently support deployment to [Cloudflare Workers](./docs/deployment/workers.md) (recommended) and [Cloudflare Pages](./docs/deployment/pages.md).
 
+### Multi-Environment Setup
+
+This project supports multiple environments with separate configurations:
+
+- **Lower Environments** (`wrangler.jsonc`): Staging, development, testing
+- **Production** (`wrangler.production.jsonc`): Production environment
+
+#### Quick Setup for Subdomain Deployment
+
+1. **Create KV Namespaces** in Cloudflare Dashboard for each environment
+2. **Update KV namespace IDs** in the respective `wrangler.*.jsonc` files
+3. **Set Environment Variables** in each Worker:
+   - `NUXT_SITE_TOKEN`: Access token for dashboard (at least 8 characters)
+   - `NUXT_CF_ACCOUNT_ID`: Your Cloudflare account ID
+   - `NUXT_CF_API_TOKEN`: Cloudflare API token with Analytics permissions
+4. **Add Custom Domains** in Worker settings (e.g., `link.yourdomain.com`)
+5. **Deploy via Cloudflare UI** with repository sync
+
+#### Example Configuration
+
+**Staging Environment:**
+- Domain: `link.limitinternal.com`
+- Worker: `sink-staging`
+- Analytics Dataset: `sink-staging`
+
+**Production Environment:**
+- Domain: `link.puzzlepanic.com`
+- Worker: `sink-production`
+- Analytics Dataset: `sink-production`
+
+For detailed setup instructions, see [Multi-Environment Deployment Guide](./docs/deployment/multi-environment.md).
+
+#### Subdomain Deployment
+
+To deploy on a subdomain like `link.yourdomain.com`:
+
+1. **Configure Custom Domain** in your Worker settings
+2. **Update DNS** (Cloudflare handles this automatically when adding custom domain)
+3. **Set up SSL** (automatic with Cloudflare)
+
+The application will be available at:
+- Main site: `https://link.yourdomain.com`
+- Dashboard: `https://link.yourdomain.com/dashboard`
+
+For step-by-step instructions, see [Subdomain Setup Guide](./docs/deployment/subdomain-setup.md).
+
 ## ⚒️ Configuration
 
 [Configuration Docs](./docs/configuration.md)
